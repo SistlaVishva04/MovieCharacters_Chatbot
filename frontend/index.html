@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Character Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Select Whom you want to Hangout</h1>
+
+        <!-- 🔍 Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search character..." oninput="filterCharacters()" />
+        </div>
+
+        <!-- ❌ Not Found Message -->
+        <div id="notFound" class="not-found-message">We didn't find that character, sorry!</div>
+
+        <!-- 🎬 Character Cards -->
+        <div class="characters" id="charactersList">
+            <!-- Character cards (your existing ones) -->
+            <!-- DJ Tillu -->
+            <div class="character" data-name="dj tillu" onclick="startChat('dj-tillu')">
+                <img src="images/dj-tillu.jpeg" alt="DJ Tillu">
+                <div class="overlay">
+                    <h2>DJ Tillu</h2>
+                    <p>The ultimate DJ with a smart mouth and a party vibe!</p>
+                    <button>Talk to Him</button>
+                </div>
+            </div>
+
+            <!-- Spiderman -->
+            <div class="character" data-name="spiderman" onclick="startChat('spiderman')">
+                <img src="images/spiderman.jpeg" alt="Spiderman">
+                <div class="overlay">
+                    <h2>Spiderman</h2>
+                    <p>Friendly neighborhood Spiderman, always ready for action!</p>
+                    <button>Talk to Him</button>
+                </div>
+            </div>
+
+            <!-- (Add all your remaining character cards here with proper `data-name`) -->
+            <!-- Example: -->
+            <div class="character" data-name="pushpa raj" onclick="startChat('pushpa-raj')">
+                <img src="images/pushpa.jpeg" alt="Pushpa Raj">
+                <div class="overlay">
+                    <h2>Pushpa Raj</h2>
+                    <p>A coolie-turned-smuggler who rises in the red sandalwood mafia.</p>
+                    <button>Talk to Him</button>
+                </div>
+            </div>
+                  <!-- Continue with Akhanda, Arjun Reddy, Bigil, etc., using same structure -->
+                        <div class="character" data-name="akhanda" onclick="startChat('akhanda')">
+                            <img src="images/akhanda.jpeg" alt="Akhanda">
+                            <div class="overlay">
+                                <h2>Akhanda</h2>
+                                <p>A devotee of Lord Shiva who fights against evil forces</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+                        <div class="character" data-name="arjun reddy" onclick="startChat('arjun-reddy')">
+                            <img src="images/arjunreddy.jpeg" alt="Arjun Reddy">
+                            <div class="overlay">
+                                <h2>Arjun Reddy</h2>
+                                <p>A genius surgeon with anger issues and a self-destructive love story.</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+                        <div class="character" data-name="bigil" onclick="startChat('bigil')">
+                            <img src="images/bigil.jpeg" alt="Bigil">
+                            <div class="overlay">
+                                <h2>Bigil</h2>
+                                <p>A football coach with a violent past who fights for women's empowerment.</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+                        <div class="character" data-name="gabbar singh" onclick="startChat('gabber-singh')">
+                            <img src="images/gabbersingh.jpeg" alt="Gabber Singh">
+                            <div class="overlay">
+                                <h2>Gabbar Singh</h2>
+                                <p>A fearless and eccentric cop who fights crime in his own unique style.</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+                        <div class="character" data-name="ramana gadu" onclick="startChat('ramana')">
+                            <img src="images/ramana.jpeg" alt="Ramana gadu">
+                            <div class="overlay">
+                                <h2>Ramana gadu</h2>
+                                <p>Unstoppable, rebellious, and unapologetically mass—a man who speaks less but makes the world listen when he acts.</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+            
+                        <!-- Iron Man -->
+                        <div class="character" data-name="iron man" onclick="startChat('ironman')">
+                            <img src="images/ironman.jpeg" alt="Iron Man">
+                            <div class="overlay">
+                                <h2>Iron Man</h2>
+                                <p>Genius, billionaire, playboy, philanthropist!</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+            
+                        <!-- NTR -->
+                        <div class="character" data-name="ntr" onclick="startChat('ntr')">
+                            <img src="images/ntr.jpeg" alt="NTR">
+                            <div class="overlay">
+                                <h2>NTR</h2>
+                                <p>Powerful performances, unshakable charisma—an icon both on and off the screen</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+            
+                        <!-- Prabhas -->
+                        <div class="character" data-name="prabhas" onclick="startChat('prabhas')">
+                            <img src="images/prabhas.jpeg" alt="Prabhas">
+                            <div class="overlay">
+                                <h2>Prabhas</h2>
+                                <p>Rebel star, all darlings' favorite—silent, strong, and effortlessly charming!</p>
+                                <button>Talk to Him</button>
+                            </div>
+                        </div>
+            <!-- Rocky Bhai -->
+<div class="character" data-name="rocky bhai" onclick="startChat('rocky-bhai')">
+    <img src="images/rocky-bhai.jpeg" alt="Rocky Bhai">
+    <div class="overlay">
+        <h2>Rocky Bhai</h2>
+        <p>The monster who rose from the streets to rule KGF with power and pride!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Rolex -->
+<div class="character" data-name="rolex" onclick="startChat('rolex')">
+    <img src="images/rolex.jpeg" alt="Rolex">
+    <div class="overlay">
+        <h2>Rolex (vikram)</h2>
+        <p>The ruthless kingpin from Vikram, with eyes that chill and a smile that kills.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Baahubali -->
+<div class="character" data-name="baahubali" onclick="startChat('baahubali')">
+    <img src="images/bahubali.jpeg" alt="Baahubali">
+    <div class="overlay">
+        <h2>Baahubali</h2>
+        <p>The legendary warrior prince who fought for justice and united a kingdom!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Chitti (Robo) -->
+<div class="character" data-name="chitti" onclick="startChat('chitti')">
+    <img src="images/chitti.jpeg" alt="Chitti">
+    <div class="overlay">
+        <h2>Chitti (Robo)</h2>
+        <p>The super-powered robot with human emotions and a genius mind.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Captain America -->
+<div class="character" data-name="captain america" onclick="startChat('captain-america')">
+    <img src="images/captainamerica.jpeg" alt="Captain America">
+    <div class="overlay">
+        <h2>Captain America</h2>
+        <p>The first Avenger—courage, honor, and leadership all rolled into one.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Jack Sparrow -->
+<div class="character" data-name="jack sparrow" onclick="startChat('jack-sparrow')">
+    <img src="images/jacksparrow.jpeg" alt="Jack Sparrow">
+    <div class="overlay">
+        <h2>Jack Sparrow</h2>
+        <p>The most unpredictable pirate with unmatched wit and charm!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Deadpool -->
+<div class="character" data-name="deadpool" onclick="startChat('deadpool')">
+    <img src="images/deadpool.jpeg" alt="Deadpool">
+    <div class="overlay">
+        <h2>Deadpool</h2>
+        <p>The merc with a mouth—funny, deadly, and breaking the fourth wall!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Batman -->
+<div class="character" data-name="batman" onclick="startChat('batman')">
+    <img src="images/batman.jpeg" alt="Batman">
+    <div class="overlay">
+        <h2>Batman</h2>
+        <p>The dark knight who brings justice to Gotham from the shadows.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Superman -->
+<div class="character" data-name="superman" onclick="startChat('superman')">
+    <img src="images/superman.jpeg" alt="Superman">
+    <div class="overlay">
+        <h2>Superman</h2>
+        <p>The man of steel with a heart of gold and strength of a god!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Doctor Strange -->
+<div class="character" data-name="doctor strange" onclick="startChat('doctor-strange')">
+    <img src="images/doctorstrange.jpeg" alt="Doctor Strange">
+    <div class="overlay">
+        <h2>Doctor Strange</h2>
+        <p>The Sorcerer Supreme who bends time, reality, and fate!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Dhanush (Hero) -->
+<div class="character" data-name="dhanush" onclick="startChat('dhanush')">
+    <img src="images/dhanush.jpeg" alt="Dhanush">
+    <div class="overlay">
+        <h2>Dhanush (Hero)</h2>
+        <p>A versatile actor known for his intense roles and soulful performances.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Thor -->
+<div class="character" data-name="thor" onclick="startChat('thor')">
+    <img src="images/thor.jpeg" alt="Thor">
+    <div class="overlay">
+        <h2>Thor</h2>
+        <p>The god of thunder who fights with Mjolnir and unmatched bravado.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Harry Potter -->
+<div class="character" data-name="harry potter" onclick="startChat('harry-potter')">
+    <img src="images/harrypoter.jpeg" alt="Harry Potter">
+    <div class="overlay">
+        <h2>Harry Potter</h2>
+        <p>The boy who lived, fought Voldemort, and saved the wizarding world.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- John Wick -->
+<div class="character" data-name="john wick" onclick="startChat('john-wick')">
+    <img src="images/johnwick.jpeg" alt="John Wick">
+    <div class="overlay">
+        <h2>John Wick</h2>
+        <p>The ultimate assassin with unmatched focus, skill, and rage!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Krish -->
+<div class="character" data-name="krish" onclick="startChat('krish')">
+    <img src="images/krish.jpeg" alt="Krish">
+    <div class="overlay">
+        <h2>Krish</h2>
+        <p>The Indian superhero born with extraordinary powers and a kind heart.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Mufasa -->
+<div class="character" data-name="mufasa" onclick="startChat('mufasa')">
+    <img src="images/mufasa.jpeg" alt="Mufasa">
+    <div class="overlay">
+        <h2>Mufasa</h2>
+        <p>The wise and noble king of Pride Lands who taught Simba the circle of life.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Kabir Singh -->
+<div class="character" data-name="kabir singh" onclick="startChat('kabir-singh')">
+    <img src="images/kabirsingh.jpeg" alt="Kabir Singh">
+    <div class="overlay">
+        <h2>Kabir Singh</h2>
+        <p>A brilliant surgeon struggling with love, anger, and obsession.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Nani (Arjun, Jersey) -->
+<div class="character" data-name="nani" onclick="startChat('nani')">
+    <img src="images/nani.jpeg" alt="Nani">
+    <div class="overlay">
+        <h2>Natural star Nani</h2>
+        <p>A failed cricketer seeking redemption for his son in a heart-touching tale.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Bhalladeva -->
+<div class="character" data-name="bhalladeva" onclick="startChat('bhalladeva')">
+    <img src="images/bhalaledava.jpeg" alt="Bhalladeva">
+    <div class="overlay">
+        <h2>Bhalladeva</h2>
+        <p>The mighty, ruthless warrior prince with a hunger for the throne.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- DJ (Duvvada Jagannadham) -->
+<div class="character" data-name="dj" onclick="startChat('dj')">
+    <img src="images/dj.jpeg" alt="DJ">
+    <div class="overlay">
+        <h2>Duvvada Jagannadham</h2>
+        <p>The stylish Brahmin vigilante who takes justice into his own hands.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- iSmart Shankar -->
+<div class="character" data-name="ismart shankar" onclick="startChat('ismart-shankar')">
+    <img src="images/ismartshankar.jpeg" alt="iSmart Shankar">
+    <div class="overlay">
+        <h2>iSmart Shankar</h2>
+        <p>A crazy smart mass guy with memory transfer and full swag!</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Vikramaditya -->
+<div class="character" data-name="vikramaditya" onclick="startChat('vikramaditya')">
+    <img src="images/vikramaditya.jpeg" alt="Vikramaditya">
+    <div class="overlay">
+        <h2>Vikramaditya</h2>
+        <p>The palmist who predicts destiny but falls helplessly in love.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Ram -->
+<div class="character" data-name="lieutenant ram from SitamRamam " onclick="startChat('lieutenant ram from sitaramam ')">
+    <img src="images/ram.jpeg" alt="Ram">
+    <div class="overlay">
+        <h2>Ram from SitamRama</h2>
+        <p>The poetic army man who redefined love through his letters.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Athreya -->
+<div class="character" data-name="athreya" onclick="startChat('athreya')">
+    <img src="images/agent.jpeg" alt="Athreya">
+    <div class="overlay">
+        <h2>Athreya</h2>
+        <p>The genius detective who uncovers deep secrets with humor and heart.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Srivalli -->
+<div class="character" data-name="srivalli" onclick="startChat('srivalli')">
+    <img src="images/srivali.jpeg" alt="Srivalli">
+    <div class="overlay">
+        <h2>Srivalli</h2>
+        <p>The graceful love interest of Pushpa, gentle yet strong.</p>
+        <button>Talk to Her</button>
+    </div>
+</div>
+
+
+<!-- Kattappa -->
+<div class="character" data-name="kattappa" onclick="startChat('kattappa')">
+    <img src="images/kattapa.jpeg" alt="Kattappa">
+    <div class="overlay">
+        <h2>Kattappa</h2>
+        <p>The loyal warrior whose one action changed the kingdom’s fate.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Anushka (Heroine) -->
+<div class="character" data-name="anushka" onclick="startChat('anushka')">
+    <img src="images/anushka.jpeg" alt="Anushka">
+    <div class="overlay">
+        <h2>Anushka shethy (Heroine)</h2>
+        <p>Graceful, powerful, and known for iconic roles like Devasena.</p>
+        <button>Talk to Her</button>
+    </div>
+</div>
+
+
+
+
+<!-- Vakeel Saab (Character) -->
+<div class="character" data-name="vakeel saab" onclick="startChat('vakeel-saab')">
+    <img src="images/vakeelsaab.jpeg" alt="Vakeel Saab">
+    <div class="overlay">
+        <h2>Vakeel Saab</h2>
+        <p>The fearless lawyer who fights for women’s justice in a corrupt society.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>
+
+<!-- Shankar (Shankar Dada MBBS) -->
+<div class="character" data-name="shankar from shankardada mbbs " onclick="startChat('shankar from shankardada mbbs')">
+    <img src="images/shankardada.jpeg" alt="Shankar">
+    <div class="overlay">
+        <h2>Shankar dhada (Shankar dhada MBBS)</h2>
+        <p>The gangster-turned-doctor with swag, heart, and healing touch.</p>
+        <button>Talk to Him</button>
+    </div>
+</div>        
+      
+</div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function filterCharacters() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const characters = document.querySelectorAll(".character");
+            let matchFound = false;
+
+            characters.forEach(card => {
+                const name = card.getAttribute("data-name").toLowerCase();
+                if (name.startsWith(input) ) {
+                    
+                    card.style.display = "block";
+                    matchFound = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            document.getElementById("notFound").style.display = matchFound ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
