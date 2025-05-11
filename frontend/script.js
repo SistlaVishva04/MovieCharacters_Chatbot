@@ -4,9 +4,9 @@ function getSelectedCharacter() {
     return params.get("character"); // Get character name
 }
 
-// Function to Start Chat with Selected Character
+// Function to Start Chat with Selected Character (from "Talk to Him" button click)
 function startChat(character) {
-    window.location.href = `chat.html?character=${character}`;
+    window.location.href = `chat.html?character=${character}`; // Navigate to chat page with character in the URL
 }
 
 // Function to Send Message to Backend
@@ -85,5 +85,29 @@ document.addEventListener("DOMContentLoaded", () => {
             sendButton.click(); // Simulate button click
         }
     });
+
+    // Check for character in URL and start the chat automatically if character exists
+    const character = getSelectedCharacter();
+    if (character) {
+        document.getElementById("chatHeader").innerText = `Chatting with ${character}`;
+        // Automatically start the conversation if character is found
+        addMessageToChat(`Hello ${character}, how can I help you today?`, false);
+    }
 });
 
+// Character Grid Interaction - Start Conversation on "Talk to Him" Button Click
+const characters = document.querySelectorAll('.character');
+characters.forEach(character => {
+    const button = character.querySelector('.overlay button');
+
+    // Add event listener to the "Talk to Him" button
+    button.addEventListener('click', function () {
+        const characterName = character.getAttribute('data-name'); // Or use img alt/text
+
+        // Start the chat by redirecting to chat page
+        startChat(characterName);
+
+        // Optionally hide overlay or provide feedback
+        character.querySelector('.overlay').style.display = 'none';
+    });
+});

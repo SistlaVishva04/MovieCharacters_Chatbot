@@ -7,9 +7,9 @@ app = Flask(__name__)
 CORS(app)  # Allows frontend to access the API
 
 # Configure Gemini AI
-API_KEY = "enter your api key here "
+API_KEY = "enter_your_api_key_here"  # Replace with your actual API key
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("models/gemini-2.0-flash")
+model = genai.GenerativeModel("models/gemini-1.5-flash")
 
 def chat_with_gemini(character_name, description, user_message):
     """Sends a prompt to Gemini AI and returns a response."""

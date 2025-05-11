@@ -9,7 +9,7 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <img id="characterImage" src="" alt="Character">
+            <img id="characterImage" src="images/black.png" alt="Character">
             <h2 id="characterName">Character Name</h2>
         </div>
         
@@ -27,29 +27,19 @@
     <script src="script.js"></script>
 
     <!-- Character Name & Image Update Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Get the selected character from URL
-            const params = new URLSearchParams(window.location.search);
-            const character = params.get("character");
-
-            if (character) {
-                document.getElementById("characterName").textContent = character;
-
-                // Mapping character names to image paths
-                const characterImages = {
-                    "DJ Tillu": "images/dj-tillu.jpeg",
-                    "Spiderman": "images/spiderman.jpeg",
-                    "Iron Man": "images/ironman.jpeg",
-                    "NTR": "images/ntr.jpeg",
-                    "Prabhas": "images/prabhas.jpeg"
-                };
-
-                // Set character image
-                const imgElement = document.getElementById("characterImage");
-                imgElement.src = characterImages[character] || "images/default.jpg"; // Default if not found
-            }
-        });
-    </script>
+        <!-- Character Name & Image Update Script -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Get the selected character from URL
+                const params = new URLSearchParams(window.location.search);
+                const character = params.get("character");
+    
+                if (character) {
+                    document.getElementById("characterName").textContent = character;
+                    
+                     
+                }
+            });
+        </script>
 </body>
 </html>
