@@ -1,0 +1,1 @@
+This is a movie characters bot featuring more than 40 characters who keep you company for chatting and hanging out. They respond to you based on their unique personalities from their respective movies. The bot includes characters from Tollywood, Bollywood, and Hollywood, each interacting with you just like they would in the films.
