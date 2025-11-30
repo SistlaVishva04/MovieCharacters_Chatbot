@@ -2,64 +2,97 @@ import google.generativeai as genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-# Initialize Flask app
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
+
 app = Flask(__name__)
-CORS(app)  # Allows frontend to access the API
+CORS(app)
+print("🔥 Running UPDATED app.py")
+# print("🔥 Running app.py from:", os.path.abspath(__file__))
 
-# Configure Gemini AI
+# Load API key
+API_KEY = os.environ.get("GEMINI_API_KEY")
 
-API_KEY = os.environ.get("API_KEY")
-  # Replace with your actual API key
+if not API_KEY:
+    print("❌ ERROR: GEMINI_API_KEY is missing in environment variables!")
+else:
+    print("✅ GEMINI_API_KEY loaded successfully!")
+
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("models/gemini-1.5-flash")
 
+model = genai.GenerativeModel("gemini-2.0-flash")
+
+
+# ------------------------
+# Gemini Chat Function
+# ------------------------
 def chat_with_gemini(character_name, description, user_message):
-    """Sends a prompt to Gemini AI and returns a response."""
-    prompt = f"You are {character_name}. {description}. Respond in your unique style.\nUser: {user_message}"
+    
+
+    prompt = f"You are {character_name}. {description}. Stay in character ALWAYS.\nUser: {user_message}"
 
     try:
+        
+
         response = model.generate_content(prompt)
 
-        # ✅ Debugging: Print API response format
-        print("Raw API Response:", response)
+        
 
-        # ✅ Check if response is valid
-        if hasattr(response, "text") and response.text:
-            return response.text  # Correct extraction for Gemini 2.0
+        if getattr(response, "text", None):
+            return response.text
 
-        return "I couldn't generate a response. Try again."
+        if response.candidates:
+            parts = response.candidates[0].content.parts
+            if parts and hasattr(parts[0], "text"):
+                return parts[0].text
+
+        return "I couldn't generate a response."
 
     except Exception as e:
-        print("Error in chat_with_gemini:", str(e))  # Log error for debugging
+        import traceback
+        print("❌ Gemini ERROR:", str(e))
+        traceback.print_exc()
         return "I'm having trouble responding. Try again."
 
+
+
+# ------------------------
+# POST /chat → Main endpoint
+# ------------------------
 @app.route("/chat", methods=["POST"])
 def chat():
-    """Handles chat messages from frontend."""
+    
+
     try:
+
         data = request.json
-        character = data.get("character", {})  
+        character = data.get("character", {})
         character_name = character.get("name", "Unknown Character")
-        description = character.get("description", "No description available.")
+        description = character.get("description", "")
         user_message = data.get("message", "").strip()
 
         if not user_message:
             return jsonify({"error": "Empty message"}), 400
 
-        bot_response = chat_with_gemini(character_name, description, user_message)
-        return jsonify({"reply": bot_response})
+        bot_reply = chat_with_gemini(character_name, description, user_message)
+        return jsonify({"reply": bot_reply})
 
     except Exception as e:
-        print("Error processing request:", str(e))  # ✅ Print detailed error in the console
+        print("❌ Server Error:", str(e))
         return jsonify({"error": "Internal server error"}), 500
 
+
+# ------------------------
+# Home route
+# ------------------------
 @app.route("/")
 def home():
     return "Server is live!", 200
 
 
-
+# Run
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-

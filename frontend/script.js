@@ -1,15 +1,21 @@
-// Function to Get the Selected Character from URL
+// -------------------------
+// Get Selected Character from URL
+// -------------------------
 function getSelectedCharacter() {
     const params = new URLSearchParams(window.location.search);
-    return params.get("character"); // Get character name
+    return params.get("character");
 }
 
-// Function to Start Chat with Selected Character (from "Talk to Him" button click)
+// -------------------------
+// Navigate to Chat Page
+// -------------------------
 function startChat(character) {
-    window.location.href = `chat.html?character=${character}`; // Navigate to chat page with character in the URL
+    window.location.href = `chat.html?character=${character}`;
 }
 
-// Function to Send Message to Backend
+// -------------------------
+// Send Message to Backend
+// -------------------------
 async function sendMessageToBackend(userMessage) {
     const character = getSelectedCharacter();
     if (!character) {
@@ -21,7 +27,7 @@ async function sendMessageToBackend(userMessage) {
     try {
         console.log("📨 Sending request to backend...");
 
-        const response = await fetch("https://moviecharacters-bot.onrender.com/chat", {
+        const response = await fetch("http://127.0.0.1:5000/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -41,9 +47,8 @@ async function sendMessageToBackend(userMessage) {
         console.log("✅ Response received:", data);
 
         if (data.reply) {
-            addMessageToChat(data.reply, false); // Show chatbot response
+            addMessageToChat(data.reply, false);
         } else {
-            console.error("Error from server:", data.error || "Invalid response");
             addMessageToChat("Sorry, an error occurred.", false);
         }
     } catch (error) {
@@ -52,7 +57,9 @@ async function sendMessageToBackend(userMessage) {
     }
 }
 
-// Function to Add Messages to Chat UI
+// -------------------------
+// Add Message to Chat UI
+// -------------------------
 function addMessageToChat(text, isUser) {
     const chatContainer = document.getElementById("chat-container");
     if (!chatContainer) return;
@@ -62,52 +69,73 @@ function addMessageToChat(text, isUser) {
     messageDiv.textContent = text;
     chatContainer.appendChild(messageDiv);
 
-    // Scroll to the latest message
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// Event Listener for Sending Messages
+// -------------------------
+// DOM Loaded (Chat Page Only)
+// -------------------------
 document.addEventListener("DOMContentLoaded", () => {
-    const sendButton = document.getElementById("send-btn");
-    const messageInput = document.getElementById("message-input");
+    
+    const isChatPage = window.location.pathname.includes("chat.html");
 
-    sendButton.addEventListener("click", () => {
-        const userMessage = messageInput.value.trim();
-        if (userMessage !== "") {
-            addMessageToChat(userMessage, true); // Show user message
-            sendMessageToBackend(userMessage); // Send to backend
-            messageInput.value = ""; // Clear input field
+    if (isChatPage) {
+        const character = getSelectedCharacter();
+
+        // Set name
+        const nameBox = document.getElementById("characterName");
+        if (nameBox && character) {
+            nameBox.textContent = character;
         }
-    });
 
-    messageInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-            sendButton.click(); // Simulate button click
+        // Set image
+        const img = document.getElementById("characterImage");
+        if (img && character) {
+            img.src = `images/${character}.jpeg`;
         }
-    });
 
-    // Check for character in URL and start the chat automatically if character exists
-    const character = getSelectedCharacter();
-    if (character) {
-        document.getElementById("chatHeader").innerText = `Chatting with ${character}`;
-        // Automatically start the conversation if character is found
-        addMessageToChat(`Hello ${character}, how can I help you today?`, false);
+        // First welcome message
+        addMessageToChat(`Hey! I'm ${character}. Let's chat!`, false);
+
+        // Setup send button
+        const sendButton = document.getElementById("send-btn");
+        const messageInput = document.getElementById("message-input");
+
+        sendButton.addEventListener("click", () => {
+            const userMessage = messageInput.value.trim();
+            if (userMessage !== "") {
+                addMessageToChat(userMessage, true);
+                sendMessageToBackend(userMessage);
+                messageInput.value = "";
+            }
+        });
+
+        messageInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") sendButton.click();
+        });
     }
+
 });
 
-// Character Grid Interaction - Start Conversation on "Talk to Him" Button Click
-const characters = document.querySelectorAll('.character');
-characters.forEach(character => {
-    const button = character.querySelector('.overlay button');
+// -------------------------
+// Index Page Handling - Character Cards
+// -------------------------
+document.addEventListener("DOMContentLoaded", () => {
 
-    // Add event listener to the "Talk to Him" button
-    button.addEventListener('click', function () {
-        const characterName = character.getAttribute('data-name'); // Or use img alt/text
+    // Only run this on index.html
+    const isIndex = window.location.pathname.includes("index.html") || window.location.pathname === "/";
+    if (!isIndex) return;
 
-        // Start the chat by redirecting to chat page
-        startChat(characterName);
+    const buttons = document.querySelectorAll('.talk-btn');
 
-        // Optionally hide overlay or provide feedback
-        character.querySelector('.overlay').style.display = 'none';
+    buttons.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            const parentCard = event.target.closest('.character');
+            const characterName = parentCard.getAttribute('data-name');
+
+            startChat(characterName);
+        });
     });
 });

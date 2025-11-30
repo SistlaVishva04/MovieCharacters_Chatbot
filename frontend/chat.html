@@ -6,40 +6,49 @@
     <title>Movie Chatbot</title>
     <link rel="stylesheet" href="styles1.css">
 </head>
+
 <body>
     <div class="chat-container">
+
         <div class="chat-header">
-            <img id="characterImage" src="images/black.png" alt="Character">
-            <h2 id="characterName">Character Name</h2>
+            <img id="characterImage" src="" alt="Character Image">
+            <h2 id="characterName">Character</h2>
         </div>
-        
-        <div class="chat-box" id="chat-container">  
-            <div class="message bot-message">Hello! Ready to chat?</div>
-        </div>
+
+        <div class="chat-box" id="chat-container"></div>
 
         <div class="chat-input">
             <input type="text" id="message-input" placeholder="Type your message...">
             <button id="send-btn">Send</button>
         </div>
+
     </div>
 
-    <!-- Include Main Chat Script -->
+    <!-- Main JS that handles chat -->
     <script src="script.js"></script>
 
-    <!-- Character Name & Image Update Script -->
-        <!-- Character Name & Image Update Script -->
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                // Get the selected character from URL
-                const params = new URLSearchParams(window.location.search);
-                const character = params.get("character");
-    
-                if (character) {
-                    document.getElementById("characterName").textContent = character;
-                    
-                     
-                }
-            });
-        </script>
+    <!-- Character Name & Image Setup -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const character = params.get("character");
+
+            if (character) {
+                // Set name on header
+                document.getElementById("characterName").textContent = character;
+
+                // Set image based on character name
+                document.getElementById("characterImage").src = `images/${character}.jpeg`;
+
+                // Add welcome message
+                const chatBox = document.getElementById("chat-container");
+                const msg = document.createElement("div");
+                msg.classList.add("message", "bot-message");
+                msg.textContent = `Hey! I'm ${character}. Let's chat!`;
+                chatBox.appendChild(msg);
+            }
+        });
+    </script>
+
 </body>
 </html>
