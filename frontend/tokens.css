@@ -1,0 +1,71 @@
+/* Hallmark · shape: app screen · genre: atmospheric · theme: Spore cellar, 2/3 (scarlet accent per supplied reference) · redesign: full
+ * nav: compact masthead and history drawer · signature: existing portraits · states: active filter, saved history, loading, storage errors · spore: cellar, scarlet · copy: verbatim
+ * axes: dark/serif/warm · posture: committed · contrast: dark body 13 / scarlet signal · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H4 E4 S5 R4 V4 · weakest: E, keep persistence browser-local and preserve the existing Flask/Gemini request contract */
+:root {
+  color-scheme: dark;
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 144px;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.35rem;
+  --text-2xl: 1.7rem;
+  --text-3xl: 2.25rem;
+  --text-display-s: clamp(2.5rem, 5vw, 3.75rem);
+  --text-display: clamp(3rem, 6vw, 4.5rem);
+  --text-section: clamp(1.75rem, 3.4vw, 2.75rem);
+  --text-title: 1.35rem;
+  --text-lead: 1.125rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+  --color-paper: oklch(13% 0.012 48);
+  --color-paper-2: oklch(17% 0.015 45);
+  --color-paper-3: oklch(22% 0.018 42);
+  --color-ink: oklch(94% 0.018 82);
+  --color-ink-2: oklch(84% 0.018 72);
+  --color-muted: oklch(69% 0.02 66);
+  --color-rule: oklch(31% 0.016 48);
+  --color-accent: oklch(47% 0.19 25);
+  --color-accent-2: oklch(54% 0.18 25);
+  --color-accent-contrast: oklch(68% 0.14 25);
+  --color-accent-ink: oklch(97% 0.01 82);
+  --color-focus: oklch(78% 0.18 25);
+  --color-error: oklch(76% 0.12 25);
+  --color-success: oklch(78% 0.08 78);
+  --color-scrim: oklch(10% 0.012 45 / 0.96);
+  --color-scrim-strong: oklch(5% 0.01 45 / 0.78);
+  --font-display: "Young Serif", Georgia, serif;
+  --font-body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 14px;
+  --radius-control: 8px;
+  --radius-pill: 999px;
+  --rule-hair: 1px;
+  --shadow-card: 0 16px 40px oklch(7% 0.01 45 / 0.42);
+  --shadow-drawer: 12px 0 44px oklch(4% 0.01 45 / 0.45);
+  --tracking-display: -0.02em;
+  --grain: 0.12;
+  --display-weight: 400;
+  --container: 1440px;
+  --gutter: 64px;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
