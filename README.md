@@ -1,31 +1,58 @@
-# 🎬 Movie Characters Chatbot
+# Movie Character Chatbot
 
-**MovieCharacters_Chatbot** is an interactive web-based chatbot platform that allows users to select their favorite movie characters (like Spider-Man, Iron Man, NTR, DJ Till, and Prabhas in Adipurush) and chat with them as if they were real. The chatbot mimics the character's tone and personality using powerful AI (Gemini 2.0 Flash) in the backend.
+A static HTML/CSS/JavaScript frontend and Flask backend that lets users chat with movie characters using Google Gemini.
 
-## 🧠 Key Features
+## Local development
 
-- 🧍‍♂️ **Character Selection**: Choose from a growing list of iconic movie characters from Tollywood, Bollywood, and Hollywood.
-- 💬 **Character-Based Conversations**: Chatbot replies in the tone, style, and personality of the selected character.
-- ✨ **Animated UI**: Smooth hover effects and transitions for a rich user experience.
-- 🤖 **Powered by Gemini AI**: Uses Google’s Gemini 2.0 Flash model for fast and intelligent replies.
-- 🌐 **Modular Design**: Easily add new characters with name, image, and personality description.
+### Backend
 
----
+Python 3.10 or newer is recommended. Put the Gemini key in the **project-root** `.env` file:
 
-## 🚀 How to Run Locally
+```text
+GEMINI_API_KEY=your_gemini_api_key
+```
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/SistlaVishva04/MovieCharacters_Chatbot.git
-   cd MovieCharacters_Chatbot
+The root `.env` is ignored by Git. Never put this key in the frontend or commit it.
 
-💻 Tech Stack
-**Frontend**: HTML5, CSS3, JavaScript
+In a PowerShell terminal:
 
-**Backend**: Python + Gemini API (Google Generative AI)
+```powershell
+cd D:\MovieCharacterBot\backend
+python -m pip install -r requirements.txt
+python app.py
+```
 
-AI Model: Gemini 2.0 Flash
+The API listens on `http://127.0.0.1:5000` (and the health endpoint is `http://127.0.0.1:5000/`). If `GEMINI_API_KEY` is missing, the backend prints a clear startup error; the health endpoint still works, while chat requests return HTTP 503.
 
-👨‍💻 Author
-Developed by **Vishva Sistla** 🚀
-Let the movies talk back to you!
+### Frontend
+
+In a second PowerShell terminal:
+
+```powershell
+cd D:\MovieCharacterBot\frontend
+python -m http.server 5500 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:5500`. The frontend selects the local API automatically on `localhost` and `127.0.0.1`.
+
+### Frontend API configuration
+
+`frontend/config.js` is the public runtime configuration for this vanilla static site. It uses `http://127.0.0.1:5000` on local hosts and `https://moviecharacters-bot-pnst.onrender.com` on other hosts. Change the corresponding `defaultApiBaseUrl` there to point to a different backend; `script.js` does not need to change.
+
+For Netlify, deploy the `frontend` directory as the publish directory. Netlify environment variables are not available directly to browser JavaScript on a static site, so set the public backend URL in `frontend/config.js` (or have a build step generate that file from a public URL variable). Backend secrets such as `GEMINI_API_KEY` must remain in the backend environment only.
+
+## Conversation history
+
+Chat history is stored only in this browser's `localStorage`; it is not sent to the backend for persistence or synchronized between browsers/devices. Each saved conversation keeps its character details, title, timestamps, and ordered successful user/assistant messages. The first successful user message becomes its title, and the history sidebar can rename, reopen, or delete individual conversations.
+
+Storage is bounded to 50 conversations, 80 messages per conversation, and about 1.5 MB of serialized data. The oldest conversations are removed first when a limit is reached; a conversation currently being used is retained. The API still receives at most the latest 16 messages as context. If browser storage is disabled, malformed, or full, chat can continue in the current tab and the sidebar reports that history may not persist.
+
+## Tests
+
+From the project root:
+
+```powershell
+python -m unittest discover -s backend -p "test_*.py" -v
+```
+
+The backend tests mock Gemini and do not consume API quota. To verify the real Gemini integration, start both servers with a valid backend `.env` and send a normal message from the local frontend.

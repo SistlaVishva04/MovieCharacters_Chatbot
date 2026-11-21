@@ -2,53 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Continue a private, locally saved conversation with a movie character.">
+    <meta name="theme-color" content="#171312">
+    <title>Conversation | Movie Character Chatbot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles1.css">
 </head>
 
-<body>
-    <div class="chat-container">
+<body class="chat-page">
+    <div class="chat-shell">
+        <aside class="history-sidebar" id="historySidebar" aria-label="Recent conversations" aria-hidden="false">
+            <div class="sidebar-brand">
+                <a class="brand" href="index.html" aria-label="Movie Character Chatbot home">
+                    <span class="brand-mark" aria-hidden="true">MC</span>
+                    <span>Movie <strong>Character</strong> Bot</span>
+                </a>
+                <button class="icon-button sidebar-close" id="historyCloseButton" type="button" aria-label="Close recent conversations">×</button>
+            </div>
+            <button class="secondary-button sidebar-new-chat" id="newConversationButton" type="button" aria-label="New chat">
+                <span class="button-symbol" aria-hidden="true">＋</span><span class="button-label">New chat</span>
+            </button>
+            <div class="history-heading">
+                <h2>Recent conversations</h2>
+                <a href="index.html#characters">Find a character</a>
+            </div>
+            <p class="history-empty" id="historyEmpty">Your conversations will appear here.</p>
+            <div class="conversation-list" id="conversationList" role="list"></div>
+            <p class="storage-notice" id="storageNotice" role="status" aria-live="polite"></p>
+        </aside>
+        <button class="drawer-backdrop" id="historyBackdrop" type="button" aria-label="Close recent conversations" hidden></button>
 
-        <div class="chat-header">
-            <img id="characterImage" src="" alt="Character Image">
-            <h2 id="characterName">Character</h2>
-        </div>
+        <main class="chat-main">
+            <header class="chat-header">
+                <button class="icon-button history-toggle" id="historyToggle" type="button" aria-label="Toggle conversation history" aria-controls="historySidebar" aria-expanded="true">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <a class="back-link" href="index.html" aria-label="Back to characters">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6M9 12h11"></path></svg>
+                </a>
+                <img id="characterImage" src="images/dj-tillu.jpeg" alt="" width="52" height="52" hidden>
+                <div class="character-identity">
+                    <h1 id="characterName">Character</h1>
+                    <p class="identity-status">In character</p>
+                </div>
+                <button class="secondary-button header-new-chat" id="headerNewChat" type="button">New chat</button>
+            </header>
 
-        <div class="chat-box" id="chat-container"></div>
+            <section class="conversation-panel" aria-label="Conversation">
+                <div class="chat-box" id="chat-container" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Conversation messages"></div>
+                <p id="chat-status" class="chat-status" role="status" aria-live="polite" data-state="idle"></p>
+            </section>
 
-        <div class="chat-input">
-            <input type="text" id="message-input" placeholder="Type your message...">
-            <button id="send-btn">Send</button>
-        </div>
-
+            <form class="chat-input" id="chat-form" aria-busy="false">
+                <label class="visually-hidden" for="message-input">Your message</label>
+                <div class="composer-box">
+                    <textarea id="message-input" name="message" rows="1" placeholder="Write a message…" autocomplete="off" maxlength="4000" enterkeyhint="send"></textarea>
+                    <div class="composer-footer">
+                        <span class="composer-hint">Enter to send, Shift + Enter for a new line</span>
+                        <button class="primary-button send-button" id="send-btn" type="submit" disabled aria-label="Send message">
+                            <span>Send</span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m4 12 16-8-5.8 16-2.6-6.2L4 12Zm7.6 1.8L20 4"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </main>
     </div>
 
-    <!-- Main JS that handles chat -->
+    <dialog class="manage-dialog" id="manageDialog" aria-labelledby="dialogTitle" aria-describedby="dialogMessage">
+        <form id="manageForm" method="dialog">
+            <button class="icon-button dialog-close" type="button" data-dialog-cancel aria-label="Close dialog">×</button>
+            <h2 id="dialogTitle"></h2>
+            <p id="dialogMessage"></p>
+            <label id="dialogInputLabel" for="dialogInput" hidden>Conversation title</label>
+            <input id="dialogInput" name="title" type="text" maxlength="70" autocomplete="off" hidden>
+            <div class="dialog-actions">
+                <button class="secondary-button" type="button" data-dialog-cancel>Cancel</button>
+                <button class="secondary-button" id="dialogConfirm" type="submit">Save</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="config.js"></script>
     <script src="script.js"></script>
-
-    <!-- Character Name & Image Setup -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const params = new URLSearchParams(window.location.search);
-            const character = params.get("character");
-
-            if (character) {
-                // Set name on header
-                document.getElementById("characterName").textContent = character;
-
-                // Set image based on character name
-                document.getElementById("characterImage").src = `images/${character}.jpeg`;
-
-                // Add welcome message
-                const chatBox = document.getElementById("chat-container");
-                const msg = document.createElement("div");
-                msg.classList.add("message", "bot-message");
-                msg.textContent = `Hey! I'm ${character}. Let's chat!`;
-                chatBox.appendChild(msg);
-            }
-        });
-    </script>
-
 </body>
 </html>

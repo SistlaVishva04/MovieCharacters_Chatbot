@@ -3,37 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Character Chatbot</title>
+    <meta name="description" content="Choose a movie character and start a conversation in their world.">
+    <meta name="theme-color" content="#171312">
+    <title>Meet the characters | Movie Character Chatbot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Select Whom you want to Hangout</h1>
-
-        <!-- 🔍 Search Bar -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search character..." oninput="filterCharacters()" />
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="brand" href="index.html" aria-label="Movie Character Chatbot home">
+                <span class="brand-mark" aria-hidden="true">MC</span>
+                <span>Movie <strong>Character</strong> Bot</span>
+            </a>
+            <nav class="site-navigation" aria-label="Main navigation">
+                <a class="nav-link is-current" href="index.html" aria-current="page">Characters</a>
+                <button class="nav-link history-toggle" id="historyToggle" type="button" aria-controls="historySidebar" aria-expanded="false">Recent chats</button>
+            </nav>
         </div>
+    </header>
 
-        <!-- ❌ Not Found Message -->
-        <div id="notFound" class="not-found-message">We didn't find that character, sorry!</div>
-
-        <!-- 🎬 Character Cards -->
-        <div class="characters" id="charactersList">
-
-            <!-- Template structure for each character -->
-            <!-- COPY PASTE THIS FORMAT FOR NEW CHARACTERS -->
-            <!--
-            <div class="character" data-name="xyz">
-                <img src="images/xyz.jpeg" alt="XYZ">
-                <div class="overlay">
-                    <h2>XYZ</h2>
-                    <p>Description here...</p>
-                    <button class="talk-btn">Talk to Him</button>
+    <main class="catalogue-main">
+        <section class="catalogue-intro" aria-labelledby="page-title">
+            <div class="intro-copy">
+                <h1 id="page-title">The scene is yours.</h1>
+                <p>Choose a character. Start a conversation in their world.</p>
+            </div>
+            <div class="intro-search">
+                <label for="searchInput">Search the cast</label>
+                <div class="search-control">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+                    <input type="search" id="searchInput" name="characters" placeholder="Try Pushpa Raj or Iron Man" aria-controls="charactersList" autocomplete="off">
+                    <button id="clearSearch" class="clear-search" type="button" aria-label="Clear character search" hidden>Clear</button>
                 </div>
             </div>
-            -->
+        </section>
+
+        <section class="directory-section" id="characters" aria-labelledby="directory-title">
+            <div class="directory-heading">
+                <div>
+                    <h2 id="directory-title">Who will you meet?</h2>
+                    <p>Forty characters, each with a story to tell.</p>
+                </div>
+                <p class="character-count" id="characterCount" aria-live="polite">40 characters</p>
+            </div>
+
+            <div class="catalogue-controls">
+                <div class="category-filters" role="group" aria-label="Filter characters by film origin">
+                    <button class="filter-chip is-selected" type="button" data-filter="all" aria-pressed="true">All characters</button>
+                    <button class="filter-chip" type="button" data-filter="indian" aria-pressed="false">Indian cinema</button>
+                    <button class="filter-chip" type="button" data-filter="hollywood" aria-pressed="false">Hollywood</button>
+                </div>
+            </div>
+
+            <div id="notFound" class="not-found-message" hidden role="status">No characters match that search. Try another name.</div>
+            <p id="searchStatus" class="visually-hidden" role="status" aria-live="polite"></p>
+
+            <div class="characters" id="charactersList">
 
             <!-- DJ Tillu -->
             <div class="character" data-name="dj tillu">
@@ -435,32 +464,53 @@
                 </div>
             </div>
 
-        </div> <!-- End Characters List -->
-    </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- JS Files -->
+    <footer class="site-footer">
+        <a class="brand brand-small" href="index.html" aria-label="Movie Character Chatbot home">
+            <span class="brand-mark" aria-hidden="true">MC</span>
+            <span>Movie <strong>Character</strong> Bot</span>
+        </a>
+        <p>Characters from the stories you know. Conversations that are yours.</p>
+    </footer>
+
+    <aside class="history-sidebar history-drawer" id="historySidebar" aria-label="Recent conversations" aria-hidden="true">
+        <div class="sidebar-brand">
+            <a class="brand" href="index.html" aria-label="Movie Character Chatbot home">
+                <span class="brand-mark" aria-hidden="true">MC</span>
+                <span>Movie <strong>Character</strong> Bot</span>
+            </a>
+            <button class="icon-button sidebar-close" id="historyCloseButton" type="button" aria-label="Close recent conversations">×</button>
+        </div>
+        <button class="secondary-button sidebar-new-chat" id="newConversationButton" type="button" aria-label="Choose a character">
+            <span class="button-symbol" aria-hidden="true">＋</span><span class="button-label">Choose a character</span>
+        </button>
+        <div class="history-heading">
+            <h2>Recent conversations</h2>
+        </div>
+        <p class="history-empty" id="historyEmpty">Your conversations will appear here.</p>
+        <div class="conversation-list" id="conversationList" role="list"></div>
+        <p class="storage-notice" id="storageNotice" role="status" aria-live="polite"></p>
+    </aside>
+    <button class="drawer-backdrop" id="historyBackdrop" type="button" aria-label="Close recent conversations" hidden></button>
+
+    <dialog class="manage-dialog" id="manageDialog" aria-labelledby="dialogTitle" aria-describedby="dialogMessage">
+        <form id="manageForm" method="dialog">
+            <button class="icon-button dialog-close" type="button" data-dialog-cancel aria-label="Close dialog">×</button>
+            <h2 id="dialogTitle"></h2>
+            <p id="dialogMessage"></p>
+            <label id="dialogInputLabel" for="dialogInput" hidden>Conversation title</label>
+            <input id="dialogInput" name="title" type="text" maxlength="70" autocomplete="off" hidden>
+            <div class="dialog-actions">
+                <button class="secondary-button" type="button" data-dialog-cancel>Cancel</button>
+                <button class="secondary-button" id="dialogConfirm" type="submit">Save</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="config.js"></script>
     <script src="script.js"></script>
-
-    <script>
-        function filterCharacters() {
-            const input = document.getElementById("searchInput").value.toLowerCase();
-            const characters = document.querySelectorAll(".character");
-            let matchFound = false;
-
-            characters.forEach(card => {
-                const name = card.getAttribute("data-name").toLowerCase();
-
-                if (name.startsWith(input)) {
-                    card.style.display = "block";
-                    matchFound = true;
-                } else {
-                    card.style.display = "none";
-                }
-            });
-
-            document.getElementById("notFound").style.display = matchFound ? "none" : "block";
-        }
-    </script>
-
 </body>
 </html>
